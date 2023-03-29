@@ -1,0 +1,9 @@
+import styled from 'styled-components';
+
+export const Container = styled.section`
+  ${({ theme }) => theme.components.container("column", "center", "center")}
+`;
+
+export const EmptyIMG = styled.img`
+  height: 10rem;
+`;
