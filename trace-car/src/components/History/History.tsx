@@ -19,7 +19,10 @@ import {
 
 const History = () => {
 	const { eventId } = useParams(); // Get dynamic params from current URL : selected item's event ID
-	const {isLoading, itemData, itemHistoryResponse} = useGetItem(eventId);
+	const { isLoading, itemData, itemHistoryResponse } = useGetItem(eventId);
+
+	const scanBaseUrl =
+		"https://sidescan.luniverse.io/chains/1666232515295616488/transactions";
 
 	// History elements scroll effects
 	useEffect(() => {
@@ -48,7 +51,7 @@ const History = () => {
 					.map((item, index) => {
 						const itemData: ItemData = JSON.parse(item.data);
 						let txHash = JSON.parse(item.tx?.receipt)?.txHash || "";
-						if(!item.tx.receipt) itemHistoryResponse.refetch()
+						if (!item.tx.receipt) itemHistoryResponse.refetch();
 						return (
 							<Card key={index}>
 								<Time>{secondsToTimeFormat(Number(item.timestamp))}</Time>
@@ -69,10 +72,7 @@ const History = () => {
 										<H1>Description</H1>
 										<Description>{itemData.description}</Description>
 									</Box>
-									<ScanLink
-										href={`https://sidescan.luniverse.io/chains/2251976252273339850/transactions/${txHash}`}
-										target="_blank"
-									>
+									<ScanLink href={`${scanBaseUrl}/${txHash}`} target="_blank">
 										Scan Link
 									</ScanLink>
 								</CardContent>
@@ -115,10 +115,7 @@ const History = () => {
 					<H1>Description</H1>
 					<Description>{itemData.description}</Description>
 				</Box>
-				<ScanLink
-					href={`https://sidescan.luniverse.io/chains/2251976252273339850/transactions/${itemData.txHash}`}
-					target="_blank"
-				>
+				<ScanLink href={`${scanBaseUrl}/${itemData.txHash}`} target="_blank">
 					Scan Link
 				</ScanLink>
 			</CreatedCard>
